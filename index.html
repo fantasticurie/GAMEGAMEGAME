@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Booster buat Fairuz!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #38bdf8;
+            text-shadow: 0 0 10px #38bdf8;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .menu {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background: transparent;
+            color: #38bdf8;
+            border: 2px solid #38bdf8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button:hover, button.active {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 15px #38bdf8;
+        }
+
+        .game-section {
+            display: none;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .game-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Game 1: Battery */
+        .battery {
+            width: 200px;
+            height: 80px;
+            border: 4px solid #cbd5e1;
+            border-radius: 10px;
+            margin: 30px auto;
+            position: relative;
+            padding: 4px;
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 20px;
+            width: 8px;
+            height: 40px;
+            background: #cbd5e1;
+            border-radius: 0 5px 5px 0;
+        }
+        .fill {
+            height: 100%;
+            width: 0%;
+            background: #22c55e;
+            border-radius: 5px;
+            transition: width 0.1s;
+            box-shadow: 0 0 15px #22c55e;
+        }
+        #btn-charge {
+            font-size: 1.2rem;
+            padding: 15px 30px;
+        }
+
+        /* Game 2: Memory */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .card {
+            background: #334155;
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .card.flipped {
+            background: #38bdf8;
+            transform: rotateY(180deg);
+        }
+
+        /* Game 3: Whack a Bug */
+        .whack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .hole {
+            background: #0f172a;
+            height: 90px;
+            border-radius: 8px;
+            border: 2px dashed #475569;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+        
+        /* Modal Quotes */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-content {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            border: 2px solid #38bdf8;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+        }
+        .quote-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>⚡ Restorasi Energi ⚡</h1>
+    <p class="subtitle">Khusus buat kamu yang lagi pusing sama project Elektro!</p>
+
+    <div class="menu">
+        <button class="tab-btn active" onclick="openGame('game1', this)">1. Charge Energi</button>
+        <button class="tab-btn" onclick="openGame('game2', this)">2. Memory Circuit</button>
+        <button class="tab-btn" onclick="openGame('game3', this)">3. Basmi Error</button>
+    </div>
+
+    <!-- GAME 1 -->
+    <div id="game1" class="game-section active">
+        <h2>Isi Ulang Kapasitasmu!</h2>
+        <p>Klik tombol secepat mungkin buat ngisi daya sampai 100%.</p>
+        <div class="battery"><div class="fill" id="battery-fill"></div></div>
+        <p id="battery-text">0%</p>
+        <button id="btn-charge" onclick="chargeBattery()">⚡ CHARGE! ⚡</button>
+    </div>
+
+    <!-- GAME 2 -->
+    <div id="game2" class="game-section">
+        <h2>Rangkai Ingatanmu!</h2>
+        <p>Cocokkan pasangan simbol elektronika ini biar nggak korslet.</p>
+        <div class="grid" id="memory-grid"></div>
+    </div>
+
+    <!-- GAME 3 -->
+    <div id="game3" class="game-section">
+        <h2>Basmi Bug & Error!</h2>
+        <p>Pukul icon 🐛 yang muncul! Kumpulkan 10 poin.</p>
+        <h3 id="score">Skor: 0</h3>
+        <button id="btn-start-whack" onclick="startWhack()">Mulai Basmi</button>
+        <div class="whack-grid" id="whack-grid">
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+            <div class="hole" onclick="whack(this)"></div>
+        </div>
+    </div>
+
+    <!-- MODAL QUOTES -->
+    <div class="modal" id="quote-modal">
+        <div class="modal-content">
+            <h2 style="color: #38bdf8;">🎉 Berhasil! 🎉</h2>
+            <p class="quote-text" id="quote-display"></p>
+            <button onclick="closeModal()">Lanjut Berjuang!</button>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        function openGame(gameId, btn) {
+            document.querySelectorAll('.game-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(gameId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function showQuote(quote) {
+            document.getElementById('quote-display').innerHTML = quote;
+            document.getElementById('quote-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('quote-modal').style.display = 'none';
+        }
+
+        // --- GAME 1: BATTERY ---
+        let charge = 0;
+        function chargeBattery() {
+            if(charge >= 100) return;
+            charge += 5;
+            document.getElementById('battery-fill').style.width = charge + '%';
+            document.getElementById('battery-text').innerText = charge + '%';
+            
+            if(charge >= 100) {
+                setTimeout(() => {
+                    showQuote("Kamu itu kayak resistor terbaik, selalu kuat nahan arus tekanan dan masalah seberat apa pun. Semangat terus ya ngerjain projectnya, energimu udah full lagi sekarang! ❤️⚡");
+                    charge = 0; 
+                    document.getElementById('battery-fill').style.width = '0%';
+                    document.getElementById('battery-text').innerText = '0%';
+                }, 500);
+            }
+        }
+        setInterval(() => {
+            if(charge > 0 && charge < 100) {
+                charge -= 1;
+                document.getElementById('battery-fill').style.width = charge + '%';
+                document.getElementById('battery-text').innerText = charge + '%';
+            }
+        }, 300);
+
+        // --- GAME 2: MEMORY ---
+        const emojis = ['⚡','⚡','🔋','🔋','🔌','🔌','💡','💡'];
+        let shuffled = emojis.sort(() => 0.5 - Math.random());
+        let memoryGrid = document.getElementById('memory-grid');
+        let flippedCards = [];
+        let matched = 0;
+
+        function initMemory() {
+            memoryGrid.innerHTML = '';
+            matched = 0;
+            shuffled = emojis.sort(() => 0.5 - Math.random());
+            shuffled.forEach((emoji, index) => {
+                let card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.emoji = emoji;
+                card.onclick = () => flipCard(card);
+                memoryGrid.appendChild(card);
+            });
+        }
+
+        function flipCard(card) {
+            if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                card.innerText = card.dataset.emoji;
+                flippedCards.push(card);
+
+                if(flippedCards.length === 2) {
+                    setTimeout(checkMatch, 800);
+                }
+            }
+        }
+
+        function checkMatch() {
+            if(flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                matched += 2;
+                if(matched === emojis.length) {
+                    setTimeout(() => {
+                        showQuote("Sama kayak ngerangkai sirkuit, kadang emang bingung nyari jalurnya. Tapi aku yakin kapasitas otakmu lebih besar dari memori apapun! Jangan lupa istirahat ya, Azri. 💡💻");
+                        initMemory();
+                    }, 500);
+                }
+            } else {
+                flippedCards[0].classList.remove('flipped');
+                flippedCards[0].innerText = '';
+                flippedCards[1].classList.remove('flipped');
+                flippedCards[1].innerText = '';
+            }
+            flippedCards = [];
+        }
+        initMemory();
+
+        // --- GAME 3: WHACK A BUG ---
+        let score = 0;
+        let whackTimer;
+        let isPlaying = false;
+
+        function startWhack() {
+            if(isPlaying) return;
+            isPlaying = true;
+            score = 0;
+            document.getElementById('score').innerText = `Skor: 0`;
+            document.getElementById('btn-start-whack').innerText = 'Sedang Berjalan...';
+            
+            whackTimer = setInterval(() => {
+                let holes = document.querySelectorAll('.hole');
+                holes.forEach(hole => hole.innerText = '');
+                let randomHole = holes[Math.floor(Math.random() * holes.length)];
+                randomHole.innerText = '🐛';
+            }, 800);
+        }
+
+        function whack(hole) {
+            if(hole.innerText === '🐛') {
+                score++;
+                document.getElementById('score').innerText = `Skor: ${score}`;
+                hole.innerText = '💥';
+                if(score >= 10) {
+                    clearInterval(whackTimer);
+                    isPlaying = false;
+                    document.querySelectorAll('.hole').forEach(h => h.innerText = '');
+                    document.getElementById('btn-start-whack').innerText = 'Mulai Basmi';
+                    setTimeout(() => {
+                        showQuote("Kalau lagi suntuk, ingat aja Hukum Ohm: V = I x R. Terus berjuang (I) hadapi rintangan (R) buat capai tujuan (V). Semua error pasti ada jalan keluarnya. You did great today! 🛠️🔥");
+                    }, 300);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
