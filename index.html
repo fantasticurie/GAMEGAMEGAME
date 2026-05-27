@@ -3,67 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Booster buat Fairuz!</title>
+    <title>Sistem Pemulihan Energi Fairuz ⚡</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        /* Mengganti font Orbitron yang kaku dengan Righteous yang lebih asyik */
+        @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@400;600;800&display=swap');
         
         body {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #030b1c; 
+            color: #e2e8f0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(3, 11, 28, 0.9), rgba(3, 11, 28, 0.9)),
+                radial-gradient(#00d2ff 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Righteous', cursive;
+            letter-spacing: 2px;
+        }
+
+        /* ANIMASI 1: Efek Neon Kedap-kedip & Membesar (Pulse) untuk Judul */
+        @keyframes neonPulse {
+            0%, 100% {
+                text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff;
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 20px #00d2ff, 0 0 40px #00d2ff, 0 0 60px #0066ff;
+                transform: scale(1.05);
+            }
         }
 
         h1 {
-            color: #38bdf8;
-            text-shadow: 0 0 10px #38bdf8;
+            color: #00d2ff;
             margin-top: 30px;
             text-align: center;
+            animation: neonPulse 2s infinite alternate; /* Terapkan animasi di sini */
         }
 
         p.subtitle {
             color: #94a3b8;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
+            font-size: 0.9rem;
         }
 
-        .menu {
+        /* WELCOME SCREEN */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #030b1c;
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+            padding: 20px;
         }
 
+        .welcome-box {
+            background: rgba(0, 50, 100, 0.3);
+            border: 2px solid #00d2ff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2) inset, 0 0 20px rgba(0, 210, 255, 0.4);
+            max-width: 500px;
+        }
+
+        /* ANIMASI 2: Teks Melayang (Floating) di Welcome Screen */
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .welcome-box p {
+            animation: floatText 3s ease-in-out infinite;
+        }
+        .welcome-box p:nth-child(2) { animation-delay: 0.2s; }
+        .welcome-box p:nth-child(3) { animation-delay: 0.4s; }
+
+        /* BUTTONS */
         button {
             background: transparent;
-            color: #38bdf8;
-            border: 2px solid #38bdf8;
+            color: #00d2ff;
+            border: 2px solid #00d2ff;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
             font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        /* ANIMASI 3: Tombol Goyang (Wiggle) saat di-hover */
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg) scale(1.05); }
+            25% { transform: rotate(-3deg) scale(1.05); }
+            75% { transform: rotate(3deg) scale(1.05); }
         }
 
         button:hover, button.active {
-            background: #38bdf8;
-            color: #0f172a;
-            box-shadow: 0 0 15px #38bdf8;
+            background: #00d2ff;
+            color: #030b1c;
+            box-shadow: 0 0 15px #00d2ff, 0 0 30px #00d2ff;
+            animation: wiggle 0.4s ease-in-out; /* Terapkan Wiggle */
+        }
+
+        /* MAIN APP */
+        #main-app {
+            display: none;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px;
         }
 
         .game-section {
             display: none;
-            background: #1e293b;
+            background: rgba(10, 25, 47, 0.8);
+            border: 1px solid #1e3a8a;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0, 100, 255, 0.2);
             width: 90%;
             max-width: 500px;
             text-align: center;
@@ -78,11 +160,12 @@
         .battery {
             width: 200px;
             height: 80px;
-            border: 4px solid #cbd5e1;
+            border: 4px solid #00d2ff;
             border-radius: 10px;
             margin: 30px auto;
             position: relative;
             padding: 4px;
+            box-shadow: 0 0 10px #00d2ff inset;
         }
         .battery::after {
             content: '';
@@ -91,20 +174,16 @@
             top: 20px;
             width: 8px;
             height: 40px;
-            background: #cbd5e1;
+            background: #00d2ff;
             border-radius: 0 5px 5px 0;
         }
         .fill {
             height: 100%;
             width: 0%;
-            background: #22c55e;
+            background: linear-gradient(90deg, #00d2ff, #00ff88);
             border-radius: 5px;
             transition: width 0.1s;
-            box-shadow: 0 0 15px #22c55e;
-        }
-        #btn-charge {
-            font-size: 1.2rem;
-            padding: 15px 30px;
+            box-shadow: 0 0 15px #00ff88;
         }
 
         /* Game 2: Memory */
@@ -115,7 +194,7 @@
             margin-top: 20px;
         }
         .card {
-            background: #334155;
+            background: #1e3a8a;
             height: 80px;
             border-radius: 8px;
             display: flex;
@@ -123,14 +202,16 @@
             align-items: center;
             font-size: 2rem;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animasi kartu lebih memantul */
+            border: 1px solid #3b82f6;
         }
         .card.flipped {
-            background: #38bdf8;
-            transform: rotateY(180deg);
+            background: #00d2ff;
+            transform: rotateY(180deg) scale(1.05); /* Membesar dikit saat dibalik */
+            box-shadow: 0 0 15px #00d2ff;
         }
 
-        /* Game 3: Whack a Bug */
+        /* Game 3: Korslet */
         .whack-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -141,102 +222,217 @@
             background: #0f172a;
             height: 90px;
             border-radius: 8px;
-            border: 2px dashed #475569;
+            border: 2px dashed #3b82f6;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2.5rem;
             cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .hole:active {
+            transform: scale(0.9); /* Efek ditekan */
+        }
+
+        /* Game 4: Stabilizer */
+        .stabilizer-box {
+            width: 100%;
+            height: 40px;
+            background: #1e293b;
+            border: 2px solid #00d2ff;
+            border-radius: 20px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .target-zone {
+            position: absolute;
+            left: 40%;
+            width: 20%;
+            height: 100%;
+            background: rgba(0, 255, 136, 0.3);
+            border-left: 2px solid #00ff88;
+            border-right: 2px solid #00ff88;
+        }
+        .indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
+            transition: left 0.05s linear;
+        }
+
+        /* Game 5: Solder */
+        .pcb-board {
+            width: 100%;
+            height: 250px;
+            background: #064e3b;
+            border: 2px solid #059669;
+            border-radius: 10px;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+            background-image: radial-gradient(#0f766e 2px, transparent 2px);
+            background-size: 20px 20px;
         }
         
+        /* Animasi Pop-up untuk titik solder */
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .solder-point {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #94a3b8;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: inset 0 0 5px #475569;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: popIn 0.3s ease-out; /* Animasi muncul */
+        }
+        .solder-point.done {
+            background: silver;
+            box-shadow: 0 0 10px #fff, inset 0 0 8px #fff;
+            cursor: default;
+            transform: scale(0.9);
+            transition: all 0.2s;
+        }
+
         /* Modal Quotes */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(3, 11, 28, 0.9);
             justify-content: center;
             align-items: center;
             z-index: 999;
         }
         .modal-content {
-            background: #1e293b;
+            background: #0a192f;
             padding: 40px;
             border-radius: 15px;
             text-align: center;
-            max-width: 400px;
-            border: 2px solid #38bdf8;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+            max-width: 450px;
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Modal muncul memantul */
         }
         .quote-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.6;
+            color: #cbd5e1;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <h1>⚡ Restorasi Energi ⚡</h1>
-    <p class="subtitle">Khusus buat kamu yang lagi pusing sama project Elektro!</p>
-
-    <div class="menu">
-        <button class="tab-btn active" onclick="openGame('game1', this)">1. Charge Energi</button>
-        <button class="tab-btn" onclick="openGame('game2', this)">2. Memory Circuit</button>
-        <button class="tab-btn" onclick="openGame('game3', this)">3. Basmi Error</button>
-    </div>
-
-    <!-- GAME 1 -->
-    <div id="game1" class="game-section active">
-        <h2>Isi Ulang Kapasitasmu!</h2>
-        <p>Klik tombol secepat mungkin buat ngisi daya sampai 100%.</p>
-        <div class="battery"><div class="fill" id="battery-fill"></div></div>
-        <p id="battery-text">0%</p>
-        <button id="btn-charge" onclick="chargeBattery()">⚡ CHARGE! ⚡</button>
-    </div>
-
-    <!-- GAME 2 -->
-    <div id="game2" class="game-section">
-        <h2>Rangkai Ingatanmu!</h2>
-        <p>Cocokkan pasangan simbol elektronika ini biar nggak korslet.</p>
-        <div class="grid" id="memory-grid"></div>
-    </div>
-
-    <!-- GAME 3 -->
-    <div id="game3" class="game-section">
-        <h2>Basmi Bug & Error!</h2>
-        <p>Pukul icon 🐛 yang muncul! Kumpulkan 10 poin.</p>
-        <h3 id="score">Skor: 0</h3>
-        <button id="btn-start-whack" onclick="startWhack()">Mulai Basmi</button>
-        <div class="whack-grid" id="whack-grid">
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
-            <div class="hole" onclick="whack(this)"></div>
+    <div id="welcome-screen">
+        <div class="welcome-box">
+            <h1>Sistem Kelistrikan: ONLINE ⚡</h1>
+            <p style="font-size: 1.2rem; font-weight: 600; color: #00ff88;">Halo, Azri!</p>
+            <p>Project kuliah emang suka bikin kepala berasap, apalagi baru masuk semester 2 gini kan? Sebelum lanjut ngoding atau ngerakit komponen, kita <i>cooling down</i> dulu yuk!</p>
+            <p>Ada 5 <i>mini-mission</i> buat balikin energimu.</p>
+            <button onclick="startApp()" style="margin-top: 20px; font-size: 1.2rem; padding: 15px 30px;">Inisiasi Sistem</button>
         </div>
     </div>
 
-    <!-- MODAL QUOTES -->
+    <div id="main-app">
+        <h1>⚡ Lab Pemulihan Energi ⚡</h1>
+        <p class="subtitle">Main santai aja, nggak perlu pakai rumus Fisika Dasar!</p>
+
+        <div class="menu">
+            <button class="tab-btn active" onclick="openGame('game1', this)">1. Charge</button>
+            <button class="tab-btn" onclick="openGame('game2', this)">2. Rangkai</button>
+            <button class="tab-btn" onclick="openGame('game3', this)">3. Anti-Korslet</button>
+            <button class="tab-btn" onclick="openGame('game4', this)">4. Stabilizer</button>
+            <button class="tab-btn" onclick="openGame('game5', this)">5. Solder</button>
+        </div>
+
+        <div id="game1" class="game-section active">
+            <h2>Isi Ulang Kapasitasmu!</h2>
+            <p>Spam klik tombol di bawah buat ngisi baterai sampai 100%.</p>
+            <div class="battery"><div class="fill" id="battery-fill"></div></div>
+            <p id="battery-text" style="font-weight:bold; font-size:1.2rem; color:#00ff88;">0%</p>
+            <button id="btn-charge" onclick="chargeBattery()" style="font-size: 1.2rem; padding: 15px 30px;">⚡ CHARGE! ⚡</button>
+        </div>
+
+        <div id="game2" class="game-section">
+            <h2>Rangkai Ingatanmu!</h2>
+            <p>Samakan simbol-simbol komponen elektronika dasar ini.</p>
+            <div class="grid" id="memory-grid"></div>
+        </div>
+
+        <div id="game3" class="game-section">
+            <h2>Basmi Korsleting!</h2>
+            <p>Pukul icon percikan api (💥) sebelum merusak sirkuit! Kumpulkan 10 Poin.</p>
+            <h3 id="score" style="color: #00d2ff;">Skor: 0</h3>
+            <button id="btn-start-whack" onclick="startWhack()">Mulai Proteksi</button>
+            <div class="whack-grid" id="whack-grid">
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole" onclick="whack(this)"></div>
+            </div>
+        </div>
+
+        <div id="game4" class="game-section">
+            <h2>Stabilkan Tegangan!</h2>
+            <p>Klik tombol tepat saat indikator berada di area hijau (220V).</p>
+            <h3 id="volt-status">Status: Menunggu...</h3>
+            <div class="stabilizer-box">
+                <div class="target-zone"></div>
+                <div class="indicator" id="volt-indicator"></div>
+            </div>
+            <button onclick="startVolt()">Mulai Mesin</button>
+            <button onclick="stopVolt()" style="border-color:#00ff88; color:#00ff88;">STABILKAN!</button>
+        </div>
+
+        <div id="game5" class="game-section">
+            <h2>Latihan Menyolder!</h2>
+            <p>Klik 10 titik timah yang muncul di papan PCB secepatnya!</p>
+            <h3 id="solder-score" style="color: #00ff88;">Titik Solder: 0/10</h3>
+            <button onclick="startSolder()" id="btn-solder">Panaskan Solder</button>
+            <div class="pcb-board" id="pcb-board"></div>
+        </div>
+    </div>
+
     <div class="modal" id="quote-modal">
         <div class="modal-content">
-            <h2 style="color: #38bdf8;">🎉 Berhasil! 🎉</h2>
+            <h2 style="color: #00ff88;">✨ TARGET TERCAPAI! ✨</h2>
             <p class="quote-text" id="quote-display"></p>
-            <button onclick="closeModal()">Lanjut Berjuang!</button>
+            <button onclick="closeModal()">Lanjut Misi Lainnya</button>
         </div>
     </div>
 
     <script>
+        // Welcome Screen
+        function startApp() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+        }
+
         // Tab Navigation
         function openGame(gameId, btn) {
             document.querySelectorAll('.game-section').forEach(el => el.classList.remove('active'));
@@ -264,11 +460,11 @@
             
             if(charge >= 100) {
                 setTimeout(() => {
-                    showQuote("Kamu itu kayak resistor terbaik, selalu kuat nahan arus tekanan dan masalah seberat apa pun. Semangat terus ya ngerjain projectnya, energimu udah full lagi sekarang! ❤️⚡");
+                    showQuote("Baterai udah full 100%! Jangan diforsir terus ya nugasnya, hardware aja butuh dicas apalagi badan kamu. Istirahat sebentar nggak bikin project kamu gagal kok. ❤️🔋");
                     charge = 0; 
                     document.getElementById('battery-fill').style.width = '0%';
                     document.getElementById('battery-text').innerText = '0%';
-                }, 500);
+                }, 400);
             }
         }
         setInterval(() => {
@@ -280,8 +476,7 @@
         }, 300);
 
         // --- GAME 2: MEMORY ---
-        const emojis = ['⚡','⚡','🔋','🔋','🔌','🔌','💡','💡'];
-        let shuffled = emojis.sort(() => 0.5 - Math.random());
+        const emojis = ['🔋','🔋','〰️','〰️','⏸️','⏸️','⏚','⏚'];
         let memoryGrid = document.getElementById('memory-grid');
         let flippedCards = [];
         let matched = 0;
@@ -289,8 +484,8 @@
         function initMemory() {
             memoryGrid.innerHTML = '';
             matched = 0;
-            shuffled = emojis.sort(() => 0.5 - Math.random());
-            shuffled.forEach((emoji, index) => {
+            let shuffled = emojis.sort(() => 0.5 - Math.random());
+            shuffled.forEach((emoji) => {
                 let card = document.createElement('div');
                 card.className = 'card';
                 card.dataset.emoji = emoji;
@@ -306,7 +501,7 @@
                 flippedCards.push(card);
 
                 if(flippedCards.length === 2) {
-                    setTimeout(checkMatch, 800);
+                    setTimeout(checkMatch, 600);
                 }
             }
         }
@@ -316,7 +511,7 @@
                 matched += 2;
                 if(matched === emojis.length) {
                     setTimeout(() => {
-                        showQuote("Sama kayak ngerangkai sirkuit, kadang emang bingung nyari jalurnya. Tapi aku yakin kapasitas otakmu lebih besar dari memori apapun! Jangan lupa istirahat ya, Azri. 💡💻");
+                        showQuote("Semester 2 emang lagi banyak-banyaknya ngenalin komponen baru. Nggak usah dihafal semua dalam semalam, pelan-pelan aja ngerangkainya. Kamu pasti bisa jadi Engineer hebat nanti! 🔌💡");
                         initMemory();
                     }, 500);
                 }
@@ -330,41 +525,123 @@
         }
         initMemory();
 
-        // --- GAME 3: WHACK A BUG ---
+        // --- GAME 3: KORSLET (Whack-a-mole) ---
         let score = 0;
         let whackTimer;
-        let isPlaying = false;
+        let isPlayingWhack = false;
 
         function startWhack() {
-            if(isPlaying) return;
-            isPlaying = true;
+            if(isPlayingWhack) return;
+            isPlayingWhack = true;
             score = 0;
             document.getElementById('score').innerText = `Skor: 0`;
-            document.getElementById('btn-start-whack').innerText = 'Sedang Berjalan...';
+            document.getElementById('btn-start-whack').innerText = 'Sistem Aktif...';
             
             whackTimer = setInterval(() => {
                 let holes = document.querySelectorAll('.hole');
                 holes.forEach(hole => hole.innerText = '');
                 let randomHole = holes[Math.floor(Math.random() * holes.length)];
-                randomHole.innerText = '🐛';
-            }, 800);
+                randomHole.innerText = '💥'; 
+            }, 700);
         }
 
         function whack(hole) {
-            if(hole.innerText === '🐛') {
+            if(hole.innerText === '💥') {
                 score++;
                 document.getElementById('score').innerText = `Skor: ${score}`;
-                hole.innerText = '💥';
+                hole.innerText = '✅';
                 if(score >= 10) {
                     clearInterval(whackTimer);
-                    isPlaying = false;
+                    isPlayingWhack = false;
                     document.querySelectorAll('.hole').forEach(h => h.innerText = '');
-                    document.getElementById('btn-start-whack').innerText = 'Mulai Basmi';
+                    document.getElementById('btn-start-whack').innerText = 'Mulai Proteksi';
                     setTimeout(() => {
-                        showQuote("Kalau lagi suntuk, ingat aja Hukum Ohm: V = I x R. Terus berjuang (I) hadapi rintangan (R) buat capai tujuan (V). Semua error pasti ada jalan keluarnya. You did great today! 🛠️🔥");
+                        showQuote("Sama kayak hukum Kirchoff, apa yang masuk harus sama dengan apa yang keluar. Usaha kerasmu ngerjain project pasti sebanding sama hasilnya. Semua korslet pasti bisa dibenerin! 🛠️🔥");
                     }, 300);
                 }
             }
+        }
+
+        // --- GAME 4: STABILIZER ---
+        let voltPos = 0;
+        let voltDir = 1;
+        let voltTimer;
+        let isVoltRunning = false;
+
+        function startVolt() {
+            if(isVoltRunning) return;
+            isVoltRunning = true;
+            document.getElementById('volt-status').innerText = 'Menstabilkan...';
+            document.getElementById('volt-status').style.color = '#e2e8f0';
+            
+            voltTimer = setInterval(() => {
+                voltPos += 3 * voltDir;
+                if(voltPos >= 98 || voltPos <= 0) voltDir *= -1;
+                document.getElementById('volt-indicator').style.left = voltPos + '%';
+            }, 20);
+        }
+
+        function stopVolt() {
+            if(!isVoltRunning) return;
+            clearInterval(voltTimer);
+            isVoltRunning = false;
+            
+            if(voltPos >= 40 && voltPos <= 60) {
+                document.getElementById('volt-status').innerText = 'Tegangan 220V Sempurna!';
+                document.getElementById('volt-status').style.color = '#00ff88';
+                setTimeout(() => {
+                    showQuote("Tegangan stabil! Kalau isi kepalamu lagi *over-voltage* gara-gara tugas, ditenangin dulu ya. Jangan sampai nge-drop. You are doing a great job, Azri! ⚡📈");
+                }, 500);
+            } else {
+                document.getElementById('volt-status').innerText = 'Tegangan Tidak Stabil, Coba Lagi!';
+                document.getElementById('volt-status').style.color = '#ef4444';
+            }
+        }
+
+        // --- GAME 5: SOLDER CEPAT ---
+        let solderScore = 0;
+        let isSoldering = false;
+
+        function startSolder() {
+            if(isSoldering) return;
+            isSoldering = true;
+            solderScore = 0;
+            document.getElementById('solder-score').innerText = `Titik Solder: 0/10`;
+            document.getElementById('pcb-board').innerHTML = '';
+            document.getElementById('btn-solder').innerText = 'Solder Panas...';
+            spawnDot();
+        }
+
+        function spawnDot() {
+            if(!isSoldering) return;
+            let pcb = document.getElementById('pcb-board');
+            let dot = document.createElement('div');
+            dot.className = 'solder-point';
+            
+            let x = Math.floor(Math.random() * (pcb.clientWidth - 30));
+            let y = Math.floor(Math.random() * (pcb.clientHeight - 30));
+            dot.style.left = x + 'px';
+            dot.style.top = y + 'px';
+
+            dot.onclick = function() {
+                if(!this.classList.contains('done')) {
+                    this.classList.add('done');
+                    solderScore++;
+                    document.getElementById('solder-score').innerText = `Titik Solder: ${solderScore}/10`;
+                    
+                    if(solderScore >= 10) {
+                        isSoldering = false;
+                        document.getElementById('btn-solder').innerText = 'Panaskan Solder';
+                        setTimeout(() => {
+                            showQuote("Solderanmu rapi banget! Kayak *skill* kamu yang pasti makin mantap tiap harinya. Semangat terus belajarnya ya, *I'm always cheering for you!* 🧑‍🏭💻");
+                            document.getElementById('pcb-board').innerHTML = '';
+                        }, 400);
+                    } else {
+                        setTimeout(spawnDot, 200); 
+                    }
+                }
+            };
+            pcb.appendChild(dot);
         }
     </script>
 </body>
