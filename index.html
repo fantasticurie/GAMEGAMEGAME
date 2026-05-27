@@ -3,129 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Pemulihan Energi Fairuz ⚡</title>
+    <title>Energy Booster buat Sayang ⚡</title>
     <style>
-        /* Mengganti font Orbitron yang kaku dengan Righteous yang lebih asyik */
-        @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@400;600;800&display=swap');
+        /* FONT PIXAR / KARTUN VIBES */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Titan+One&display=swap');
         
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: #030b1c; 
-            color: #e2e8f0;
+            font-family: 'Nunito', sans-serif;
+            background-color: #1a2035; /* Tinkercad dark base */
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(3, 11, 28, 0.9), rgba(3, 11, 28, 0.9)),
-                radial-gradient(#00d2ff 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px;
+            position: relative;
+        }
+
+        /* LATAR BELAKANG ELEMEN MELAYANG */
+        #floating-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .float-item {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         h1, h2, h3 {
-            font-family: 'Righteous', cursive;
+            font-family: 'Titan One', cursive; /* Font tebal ala kartun */
             letter-spacing: 2px;
-        }
-
-        /* ANIMASI 1: Efek Neon Kedap-kedip & Membesar (Pulse) untuk Judul */
-        @keyframes neonPulse {
-            0%, 100% {
-                text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff;
-                transform: scale(1);
-            }
-            50% {
-                text-shadow: 0 0 20px #00d2ff, 0 0 40px #00d2ff, 0 0 60px #0066ff;
-                transform: scale(1.05);
-            }
+            text-align: center;
+            text-shadow: 0 4px 0 rgba(0,0,0,0.2);
         }
 
         h1 {
-            color: #00d2ff;
+            color: #ffd93d;
+            font-size: 2.5rem;
             margin-top: 30px;
-            text-align: center;
-            animation: neonPulse 2s infinite alternate; /* Terapkan animasi di sini */
+            -webkit-text-stroke: 2px #ff6b6b;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         p.subtitle {
-            color: #94a3b8;
+            color: #48dbfb;
             margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 800;
             text-align: center;
-            font-size: 0.9rem;
         }
 
-        /* WELCOME SCREEN */
+        /* 3D KARTUN BUTTON STYLES (Tinkercad Vibes) */
+        button, .btn-3d {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 8px 0 #c0392b, 0 15px 20px rgba(0,0,0,0.4); /* Efek 3D tebal */
+            transition: all 0.1s;
+            margin: 5px;
+        }
+
+        button:active, .btn-3d:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 #c0392b, 0 5px 10px rgba(0,0,0,0.4); /* Efek tertekan */
+        }
+
+        .btn-blue { background-color: #48dbfb; color: #1a2035; box-shadow: 0 8px 0 #0abde3, 0 15px 20px rgba(0,0,0,0.4); }
+        .btn-blue:active { box-shadow: 0 0 0 #0abde3, 0 5px 10px rgba(0,0,0,0.4); }
+
+        .btn-green { background-color: #1dd1a1; box-shadow: 0 8px 0 #10ac84, 0 15px 20px rgba(0,0,0,0.4); }
+        .btn-green:active { box-shadow: 0 0 0 #10ac84, 0 5px 10px rgba(0,0,0,0.4); }
+
+        .tab-btn.active {
+            background-color: #feca57;
+            color: #1a2035;
+            box-shadow: 0 0 0 #ff9f43, 0 5px 10px rgba(0,0,0,0.4);
+            transform: translateY(8px);
+        }
+
+        /* CONTAINERS */
+        .welcome-box, .game-section {
+            background: linear-gradient(145deg, #2c3e50, #1a252f);
+            border: 4px solid #34495e;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: inset 0 5px 0 rgba(255,255,255,0.1), 0 20px 30px rgba(0,0,0,0.6);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
         #welcome-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #030b1c;
+            background: rgba(26, 32, 53, 0.95);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            text-align: center;
-            padding: 20px;
         }
 
-        .welcome-box {
-            background: rgba(0, 50, 100, 0.3);
-            border: 2px solid #00d2ff;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2) inset, 0 0 20px rgba(0, 210, 255, 0.4);
-            max-width: 500px;
-        }
-
-        /* ANIMASI 2: Teks Melayang (Floating) di Welcome Screen */
-        @keyframes floatText {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .welcome-box p {
-            animation: floatText 3s ease-in-out infinite;
-        }
-        .welcome-box p:nth-child(2) { animation-delay: 0.2s; }
-        .welcome-box p:nth-child(3) { animation-delay: 0.4s; }
-
-        /* BUTTONS */
-        button {
-            background: transparent;
-            color: #00d2ff;
-            border: 2px solid #00d2ff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 10px;
-        }
-
-        /* ANIMASI 3: Tombol Goyang (Wiggle) saat di-hover */
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg) scale(1.05); }
-            25% { transform: rotate(-3deg) scale(1.05); }
-            75% { transform: rotate(3deg) scale(1.05); }
-        }
-
-        button:hover, button.active {
-            background: #00d2ff;
-            color: #030b1c;
-            box-shadow: 0 0 15px #00d2ff, 0 0 30px #00d2ff;
-            animation: wiggle 0.4s ease-in-out; /* Terapkan Wiggle */
-        }
-
-        /* MAIN APP */
         #main-app {
             display: none;
             width: 100%;
-            display: flex;
             flex-direction: column;
             align-items: center;
         }
@@ -136,309 +145,351 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 800px;
+            max-width: 600px;
         }
 
-        .game-section {
-            display: none;
-            background: rgba(10, 25, 47, 0.8);
-            border: 1px solid #1e3a8a;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 100, 255, 0.2);
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
+        .game-section { display: none; }
+        .game-section.active { display: block; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .game-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Game 1: Battery */
-        .battery {
-            width: 200px;
+        /* Game 1: 3D Battery */
+        .battery-3d {
+            width: 180px;
             height: 80px;
-            border: 4px solid #00d2ff;
-            border-radius: 10px;
+            background: #2d3436;
+            border-radius: 15px;
             margin: 30px auto;
             position: relative;
-            padding: 4px;
-            box-shadow: 0 0 10px #00d2ff inset;
+            padding: 8px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
+            border: 3px solid #636e72;
         }
-        .battery::after {
+        .battery-3d::after {
             content: '';
             position: absolute;
-            right: -12px;
+            right: -15px;
             top: 20px;
-            width: 8px;
+            width: 15px;
             height: 40px;
-            background: #00d2ff;
-            border-radius: 0 5px 5px 0;
+            background: #636e72;
+            border-radius: 0 8px 8px 0;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2);
         }
-        .fill {
+        .fill-3d {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #00d2ff, #00ff88);
-            border-radius: 5px;
+            background: linear-gradient(to bottom, #1dd1a1, #10ac84);
+            border-radius: 8px;
             transition: width 0.1s;
-            box-shadow: 0 0 15px #00ff88;
+            box-shadow: inset 0 3px 5px rgba(255,255,255,0.4), 0 0 15px #1dd1a1;
         }
 
-        /* Game 2: Memory */
+        /* Game 2: 3D Memory Flip Cards */
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-top: 20px;
+            perspective: 1000px;
+        }
+        .card-container {
+            width: 100%;
+            height: 70px;
+            position: relative;
+            cursor: pointer;
         }
         .card {
-            background: #1e3a8a;
-            height: 80px;
-            border-radius: 8px;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2rem;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animasi kartu lebih memantul */
-            border: 1px solid #3b82f6;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.3);
         }
-        .card.flipped {
-            background: #00d2ff;
-            transform: rotateY(180deg) scale(1.05); /* Membesar dikit saat dibalik */
-            box-shadow: 0 0 15px #00d2ff;
-        }
+        .card-front { background: #ff9f43; border: 2px solid #e1b12c; }
+        .card-back { background: #48dbfb; border: 2px solid #0abde3; transform: rotateY(180deg); }
 
-        /* Game 3: Korslet */
+        /* Game 3: 3D Whack-a-mole (Korslet) */
         .whack-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 15px;
             margin-top: 20px;
         }
-        .hole {
-            background: #0f172a;
-            height: 90px;
-            border-radius: 8px;
-            border: 2px dashed #3b82f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-        .hole:active {
-            transform: scale(0.9); /* Efek ditekan */
-        }
-
-        /* Game 4: Stabilizer */
-        .stabilizer-box {
-            width: 100%;
-            height: 40px;
-            background: #1e293b;
-            border: 2px solid #00d2ff;
-            border-radius: 20px;
-            margin: 30px 0;
+        .hole-3d {
+            background: #111;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: inset 0 10px 15px rgba(0,0,0,1), 0 2px 0 rgba(255,255,255,0.2);
             position: relative;
             overflow: hidden;
         }
-        .target-zone {
+        .bug-3d {
+            font-size: 2.5rem;
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: bottom 0.1s;
+            cursor: pointer;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+        }
+        .bug-3d.up { bottom: 10px; animation: popBug 0.2s ease-out; }
+        @keyframes popBug { 0% { bottom: -60px; } 80% { bottom: 20px; } 100% { bottom: 10px; } }
+
+        /* Game 4: Stabilizer 3D */
+        .stabilizer-box-3d {
+            width: 100%;
+            height: 50px;
+            background: #2d3436;
+            border-radius: 25px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.8), 0 5px 0 rgba(255,255,255,0.1);
+        }
+        .target-zone-3d {
             position: absolute;
             left: 40%;
             width: 20%;
             height: 100%;
-            background: rgba(0, 255, 136, 0.3);
-            border-left: 2px solid #00ff88;
-            border-right: 2px solid #00ff88;
+            background: rgba(29, 209, 161, 0.4);
+            border-left: 3px dashed #1dd1a1;
+            border-right: 3px dashed #1dd1a1;
         }
-        .indicator {
+        .indicator-3d {
             position: absolute;
-            top: 0;
+            top: -5px;
             left: 0;
-            width: 10px;
-            height: 100%;
-            background: #fff;
-            box-shadow: 0 0 10px #fff;
+            width: 15px;
+            height: 60px;
+            background: #ff6b6b;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff6b6b, inset 0 2px 5px rgba(255,255,255,0.5);
             transition: left 0.05s linear;
         }
 
-        /* Game 5: Solder */
-        .pcb-board {
+        /* Game 5: Solder 3D */
+        .pcb-board-3d {
             width: 100%;
             height: 250px;
-            background: #064e3b;
-            border: 2px solid #059669;
-            border-radius: 10px;
+            background: #10ac84;
+            border-radius: 15px;
             position: relative;
             margin-top: 20px;
-            overflow: hidden;
-            background-image: radial-gradient(#0f766e 2px, transparent 2px);
-            background-size: 20px 20px;
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5);
+            border: 4px solid #01906a;
+            background-image: 
+                radial-gradient(#0abde3 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px, 60px 60px;
         }
-        
-        /* Animasi Pop-up untuk titik solder */
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .solder-point {
+        .solder-point-3d {
             position: absolute;
-            width: 25px;
-            height: 25px;
-            background: #94a3b8;
+            width: 30px;
+            height: 30px;
+            background: #95a5a6;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: inset 0 0 5px #475569;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: popIn 0.3s ease-out; /* Animasi muncul */
+            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.5), inset 0 3px 5px rgba(255,255,255,0.8), 0 5px 10px rgba(0,0,0,0.4);
+            transform: scale(0);
+            animation: popSolder 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .solder-point.done {
-            background: silver;
-            box-shadow: 0 0 10px #fff, inset 0 0 8px #fff;
-            cursor: default;
+        @keyframes popSolder { to { transform: scale(1); } }
+        .solder-point-3d.done {
+            background: #ecf0f1;
+            box-shadow: 0 0 15px #fff, inset 0 0 10px #bdc3c7;
             transform: scale(0.9);
-            transition: all 0.2s;
         }
 
-        /* Modal Quotes */
+        /* DIARY SECTION (New) */
+        textarea {
+            width: 100%;
+            height: 120px;
+            border-radius: 15px;
+            padding: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 3px solid #48dbfb;
+            background: #f1f2f6;
+            color: #2f3542;
+            resize: none;
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        textarea:focus { outline: none; border-color: #ff6b6b; }
+
+        /* Modal Quotes 3D */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 11, 28, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
-            z-index: 999;
+            z-index: 9999;
         }
         .modal-content {
-            background: #0a192f;
-            padding: 40px;
-            border-radius: 15px;
+            background: #fff;
+            color: #2c3e50;
+            padding: 30px;
+            border-radius: 25px;
             text-align: center;
-            max-width: 450px;
-            border: 2px solid #00d2ff;
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Modal muncul memantul */
+            max-width: 90%;
+            width: 400px;
+            border: 5px solid #48dbfb;
+            box-shadow: 0 20px 0 #0abde3, 0 30px 30px rgba(0,0,0,0.5);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .quote-text {
-            font-size: 1.1rem;
-            font-style: italic;
+            font-size: 1.2rem;
+            font-weight: 800;
             margin-bottom: 25px;
-            line-height: 1.6;
-            color: #cbd5e1;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            line-height: 1.5;
+            color: #ff4757;
         }
     </style>
 </head>
 <body>
 
+    <div id="floating-bg"></div>
+
     <div id="welcome-screen">
         <div class="welcome-box">
-            <h1>Sistem Kelistrikan: ONLINE ⚡</h1>
-            <p style="font-size: 1.2rem; font-weight: 600; color: #00ff88;">Halo, Azri!</p>
-            <p>Project kuliah emang suka bikin kepala berasap, apalagi baru masuk semester 2 gini kan? Sebelum lanjut ngoding atau ngerakit komponen, kita <i>cooling down</i> dulu yuk!</p>
-            <p>Ada 5 <i>mini-mission</i> buat balikin energimu.</p>
-            <button onclick="startApp()" style="margin-top: 20px; font-size: 1.2rem; padding: 15px 30px;">Inisiasi Sistem</button>
+            <h1 style="color: #48dbfb; -webkit-text-stroke: 1px #0abde3;">⚡ LAB SAYANG ⚡</h1>
+            <p style="font-size: 1.5rem; font-weight: 900; color: #feca57; font-family: 'Titan One';">Halo, Sayang!</p>
+            <p style="font-size: 1.1rem; line-height: 1.6;">Lagi mumet ngerjain project Elektro ya? Sini istirahat bentar, mainin mini-games ini biar kepalanya nggak ikutan korslet! 😆</p>
+            <button class="btn-green" onclick="startApp()" style="margin-top: 20px; font-size: 1.3rem; padding: 15px 30px;">MULAI MAIN!</button>
         </div>
     </div>
 
     <div id="main-app">
-        <h1>⚡ Lab Pemulihan Energi ⚡</h1>
-        <p class="subtitle">Main santai aja, nggak perlu pakai rumus Fisika Dasar!</p>
+        <h1>Lab Energi Sayang</h1>
+        <p class="subtitle">Pencet-pencet aja, nggak ada rumus di sini!</p>
 
         <div class="menu">
-            <button class="tab-btn active" onclick="openGame('game1', this)">1. Charge</button>
-            <button class="tab-btn" onclick="openGame('game2', this)">2. Rangkai</button>
-            <button class="tab-btn" onclick="openGame('game3', this)">3. Anti-Korslet</button>
-            <button class="tab-btn" onclick="openGame('game4', this)">4. Stabilizer</button>
-            <button class="tab-btn" onclick="openGame('game5', this)">5. Solder</button>
+            <button class="btn-3d btn-blue tab-btn active" onclick="openGame('game1', this)">1. CHARGE</button>
+            <button class="btn-3d btn-blue tab-btn" onclick="openGame('game2', this)">2. RANGKAI</button>
+            <button class="btn-3d btn-blue tab-btn" onclick="openGame('game3', this)">3. KORSLET</button>
+            <button class="btn-3d btn-blue tab-btn" onclick="openGame('game4', this)">4. STABIL</button>
+            <button class="btn-3d btn-blue tab-btn" onclick="openGame('game5', this)">5. SOLDER</button>
+            <button class="btn-3d btn-green tab-btn" onclick="openGame('game6', this)">📝 DIARY</button>
         </div>
 
         <div id="game1" class="game-section active">
-            <h2>Isi Ulang Kapasitasmu!</h2>
-            <p>Spam klik tombol di bawah buat ngisi baterai sampai 100%.</p>
-            <div class="battery"><div class="fill" id="battery-fill"></div></div>
-            <p id="battery-text" style="font-weight:bold; font-size:1.2rem; color:#00ff88;">0%</p>
-            <button id="btn-charge" onclick="chargeBattery()" style="font-size: 1.2rem; padding: 15px 30px;">⚡ CHARGE! ⚡</button>
+            <h2>Isi Daya!</h2>
+            <p>Spam klik buat ngisi baterai semangatmu sampai 100%!</p>
+            <div class="battery-3d"><div class="fill-3d" id="battery-fill"></div></div>
+            <p id="battery-text" style="font-family:'Titan One'; font-size:2rem; color:#1dd1a1; margin: 10px 0;">0%</p>
+            <button class="btn-green" id="btn-charge" onclick="chargeBattery()" style="font-size: 1.2rem; padding: 15px 40px;">⚡ KLIK TERUS! ⚡</button>
         </div>
 
         <div id="game2" class="game-section">
-            <h2>Rangkai Ingatanmu!</h2>
-            <p>Samakan simbol-simbol komponen elektronika dasar ini.</p>
+            <h2>Cari Pasangan!</h2>
+            <p>Buka kartunya dan samain komponennya!</p>
             <div class="grid" id="memory-grid"></div>
         </div>
 
         <div id="game3" class="game-section">
-            <h2>Basmi Korsleting!</h2>
-            <p>Pukul icon percikan api (💥) sebelum merusak sirkuit! Kumpulkan 10 Poin.</p>
-            <h3 id="score" style="color: #00d2ff;">Skor: 0</h3>
-            <button id="btn-start-whack" onclick="startWhack()">Mulai Proteksi</button>
+            <h2>Basmi Percikan!</h2>
+            <p>Klik api korslet (💥) yang nongol! Jangan sampai meledak!</p>
+            <h3 id="score" style="color: #feca57; font-size: 2rem; margin:10px 0;">Skor: 0</h3>
+            <button class="btn-green" id="btn-start-whack" onclick="startWhack()">Mulai Basmi</button>
             <div class="whack-grid" id="whack-grid">
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
-                <div class="hole" onclick="whack(this)"></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
+                <div class="hole-3d"><div class="bug-3d" onclick="whack(this)">💥</div></div>
             </div>
         </div>
 
         <div id="game4" class="game-section">
-            <h2>Stabilkan Tegangan!</h2>
-            <p>Klik tombol tepat saat indikator berada di area hijau (220V).</p>
-            <h3 id="volt-status">Status: Menunggu...</h3>
-            <div class="stabilizer-box">
-                <div class="target-zone"></div>
-                <div class="indicator" id="volt-indicator"></div>
+            <h2>Tahan Emosi!</h2>
+            <p>Klik tombol merah pas jarum ada di area HIJAU!</p>
+            <h3 id="volt-status" style="margin: 15px 0;">Status: Ready...</h3>
+            <div class="stabilizer-box-3d">
+                <div class="target-zone-3d"></div>
+                <div class="indicator-3d" id="volt-indicator"></div>
             </div>
-            <button onclick="startVolt()">Mulai Mesin</button>
-            <button onclick="stopVolt()" style="border-color:#00ff88; color:#00ff88;">STABILKAN!</button>
+            <button class="btn-blue" onclick="startVolt()">JALANKAN MESIN</button>
+            <button class="btn-3d" onclick="stopVolt()" style="background:#ff4757;">STOP JARUM!</button>
         </div>
 
         <div id="game5" class="game-section">
-            <h2>Latihan Menyolder!</h2>
-            <p>Klik 10 titik timah yang muncul di papan PCB secepatnya!</p>
-            <h3 id="solder-score" style="color: #00ff88;">Titik Solder: 0/10</h3>
-            <button onclick="startSolder()" id="btn-solder">Panaskan Solder</button>
-            <div class="pcb-board" id="pcb-board"></div>
+            <h2>Solder Cepat!</h2>
+            <p>Klik 10 titik timah secepat mungkin sebelum dingin!</p>
+            <h3 id="solder-score" style="color: #1dd1a1; font-size: 2rem; margin: 10px 0;">0/10</h3>
+            <button class="btn-green" onclick="startSolder()" id="btn-solder">PANASKAN SOLDER</button>
+            <div class="pcb-board-3d" id="pcb-board"></div>
+        </div>
+
+        <div id="game6" class="game-section">
+            <h2 style="color: #1dd1a1;">Buku Curhat</h2>
+            <p>Lagi pusing mikirin kodingan, tugas, atau praktikum? Tulis aja di sini Sayang!</p>
+            <textarea id="diary-text" placeholder="Ketik aja keluh kesah kamu di sini..."></textarea>
+            <button class="btn-3d" onclick="buangSuntuk()" style="width: 100%; background:#ff4757;">BUANG SUNTUK KE BUMI! 🌍</button>
         </div>
     </div>
 
     <div class="modal" id="quote-modal">
         <div class="modal-content">
-            <h2 style="color: #00ff88;">✨ TARGET TERCAPAI! ✨</h2>
+            <h2 style="color: #1dd1a1; margin-top: 0; font-size: 2rem;">MANTAP SAYANG!</h2>
             <p class="quote-text" id="quote-display"></p>
-            <button onclick="closeModal()">Lanjut Misi Lainnya</button>
+            <button class="btn-blue" onclick="closeModal()" style="width: 100%;">LANJUT MAIN LAGI</button>
         </div>
     </div>
 
     <script>
-        // Welcome Screen
+        // BACKGROUND MELAYANG
+        const emojisList = ['⚡', '💡', '🔋', '🔌', '⚙️', '🛠️'];
+        const floatContainer = document.getElementById('floating-bg');
+        for(let i=0; i<15; i++) {
+            let el = document.createElement('div');
+            el.className = 'float-item';
+            el.innerText = emojisList[Math.floor(Math.random() * emojisList.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            el.style.animationDelay = (Math.random() * 5) + 's';
+            floatContainer.appendChild(el);
+        }
+
+        // NAVIGATION
         function startApp() {
             document.getElementById('welcome-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'flex';
         }
 
-        // Tab Navigation
         function openGame(gameId, btn) {
             document.querySelectorAll('.game-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('btn-blue');
+            });
             document.getElementById(gameId).classList.add('active');
             btn.classList.add('active');
+            btn.classList.remove('btn-blue');
         }
 
         function showQuote(quote) {
@@ -458,9 +509,14 @@
             document.getElementById('battery-fill').style.width = charge + '%';
             document.getElementById('battery-text').innerText = charge + '%';
             
+            // Efek mentul pas diklik
+            let btn = document.getElementById('btn-charge');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 50);
+            
             if(charge >= 100) {
                 setTimeout(() => {
-                    showQuote("Baterai udah full 100%! Jangan diforsir terus ya nugasnya, hardware aja butuh dicas apalagi badan kamu. Istirahat sebentar nggak bikin project kamu gagal kok. ❤️🔋");
+                    showQuote("Baterai 100%! ⚡<br><br>Btw, sadar nggak sih, tiap kamu semangat, energiku ikutan full? Jadi jangan lemes terus ya Sayang! Nanti aku ikutan lowbat! 🔋❤️");
                     charge = 0; 
                     document.getElementById('battery-fill').style.width = '0%';
                     document.getElementById('battery-text').innerText = '0%';
@@ -473,10 +529,10 @@
                 document.getElementById('battery-fill').style.width = charge + '%';
                 document.getElementById('battery-text').innerText = charge + '%';
             }
-        }, 300);
+        }, 400);
 
-        // --- GAME 2: MEMORY ---
-        const emojis = ['🔋','🔋','〰️','〰️','⏸️','⏸️','⏚','⏚'];
+        // --- GAME 2: MEMORY 3D ---
+        const memEmojis = ['🔌','🔌','💡','💡','⚙️','⚙️','🔋','🔋'];
         let memoryGrid = document.getElementById('memory-grid');
         let flippedCards = [];
         let matched = 0;
@@ -484,24 +540,39 @@
         function initMemory() {
             memoryGrid.innerHTML = '';
             matched = 0;
-            let shuffled = emojis.sort(() => 0.5 - Math.random());
+            let shuffled = memEmojis.sort(() => 0.5 - Math.random());
             shuffled.forEach((emoji) => {
+                let container = document.createElement('div');
+                container.className = 'card-container';
+                
                 let card = document.createElement('div');
                 card.className = 'card';
                 card.dataset.emoji = emoji;
-                card.onclick = () => flipCard(card);
-                memoryGrid.appendChild(card);
+                
+                let front = document.createElement('div');
+                front.className = 'card-face card-front';
+                front.innerText = '❓';
+                
+                let back = document.createElement('div');
+                back.className = 'card-face card-back';
+                back.innerText = emoji;
+
+                card.appendChild(front);
+                card.appendChild(back);
+                container.appendChild(card);
+
+                container.onclick = () => flipCard(card);
+                memoryGrid.appendChild(container);
             });
         }
 
         function flipCard(card) {
             if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
                 card.classList.add('flipped');
-                card.innerText = card.dataset.emoji;
                 flippedCards.push(card);
 
                 if(flippedCards.length === 2) {
-                    setTimeout(checkMatch, 600);
+                    setTimeout(checkMatch, 800);
                 }
             }
         }
@@ -509,23 +580,21 @@
         function checkMatch() {
             if(flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
                 matched += 2;
-                if(matched === emojis.length) {
+                if(matched === memEmojis.length) {
                     setTimeout(() => {
-                        showQuote("Semester 2 emang lagi banyak-banyaknya ngenalin komponen baru. Nggak usah dihafal semua dalam semalam, pelan-pelan aja ngerangkainya. Kamu pasti bisa jadi Engineer hebat nanti! 🔌💡");
+                        showQuote("Wah otak kamu hebat banget ngingetnya! 🧠✨<br><br>Kalo nginget tanggal jadian kita, sehebat ini juga kan? Wkwk canda deng! Semangat terus ya Sayangku! 🧩😘");
                         initMemory();
                     }, 500);
                 }
             } else {
                 flippedCards[0].classList.remove('flipped');
-                flippedCards[0].innerText = '';
                 flippedCards[1].classList.remove('flipped');
-                flippedCards[1].innerText = '';
             }
             flippedCards = [];
         }
         initMemory();
 
-        // --- GAME 3: KORSLET (Whack-a-mole) ---
+        // --- GAME 3: KORSLET (Whack a mole 3D) ---
         let score = 0;
         let whackTimer;
         let isPlayingWhack = false;
@@ -535,29 +604,31 @@
             isPlayingWhack = true;
             score = 0;
             document.getElementById('score').innerText = `Skor: 0`;
-            document.getElementById('btn-start-whack').innerText = 'Sistem Aktif...';
+            document.getElementById('btn-start-whack').innerText = 'Main Lagi...';
             
             whackTimer = setInterval(() => {
-                let holes = document.querySelectorAll('.hole');
-                holes.forEach(hole => hole.innerText = '');
-                let randomHole = holes[Math.floor(Math.random() * holes.length)];
-                randomHole.innerText = '💥'; 
-            }, 700);
+                let bugs = document.querySelectorAll('.bug-3d');
+                bugs.forEach(bug => { bug.classList.remove('up'); bug.innerText = '💥'; });
+                let randomBug = bugs[Math.floor(Math.random() * bugs.length)];
+                randomBug.classList.add('up');
+            }, 800);
         }
 
-        function whack(hole) {
-            if(hole.innerText === '💥') {
+        function whack(bug) {
+            if(bug.classList.contains('up') && bug.innerText === '💥') {
                 score++;
                 document.getElementById('score').innerText = `Skor: ${score}`;
-                hole.innerText = '✅';
+                bug.innerText = '✅';
+                setTimeout(() => bug.classList.remove('up'), 200);
+
                 if(score >= 10) {
                     clearInterval(whackTimer);
                     isPlayingWhack = false;
-                    document.querySelectorAll('.hole').forEach(h => h.innerText = '');
-                    document.getElementById('btn-start-whack').innerText = 'Mulai Proteksi';
+                    document.querySelectorAll('.bug-3d').forEach(b => b.classList.remove('up'));
+                    document.getElementById('btn-start-whack').innerText = 'Mulai Basmi';
                     setTimeout(() => {
-                        showQuote("Sama kayak hukum Kirchoff, apa yang masuk harus sama dengan apa yang keluar. Usaha kerasmu ngerjain project pasti sebanding sama hasilnya. Semua korslet pasti bisa dibenerin! 🛠️🔥");
-                    }, 300);
+                        showQuote("Korslet di sirkuit udah dibasmi! 🛠️🔥<br><br>Kalau korslet di hati karena kangen sih, obatnya cuma satu: cepet selesain tugasnya terus kita ketemuan! 🏃‍♂️💨❤️");
+                    }, 400);
                 }
             }
         }
@@ -571,12 +642,12 @@
         function startVolt() {
             if(isVoltRunning) return;
             isVoltRunning = true;
-            document.getElementById('volt-status').innerText = 'Menstabilkan...';
-            document.getElementById('volt-status').style.color = '#e2e8f0';
+            document.getElementById('volt-status').innerText = 'JARUM BERGERAK!';
+            document.getElementById('volt-status').style.color = '#fff';
             
             voltTimer = setInterval(() => {
-                voltPos += 3 * voltDir;
-                if(voltPos >= 98 || voltPos <= 0) voltDir *= -1;
+                voltPos += 4 * voltDir;
+                if(voltPos >= 95 || voltPos <= 0) voltDir *= -1;
                 document.getElementById('volt-indicator').style.left = voltPos + '%';
             }, 20);
         }
@@ -587,14 +658,14 @@
             isVoltRunning = false;
             
             if(voltPos >= 40 && voltPos <= 60) {
-                document.getElementById('volt-status').innerText = 'Tegangan 220V Sempurna!';
-                document.getElementById('volt-status').style.color = '#00ff88';
+                document.getElementById('volt-status').innerText = 'PAS BANGET!';
+                document.getElementById('volt-status').style.color = '#1dd1a1';
                 setTimeout(() => {
-                    showQuote("Tegangan stabil! Kalau isi kepalamu lagi *over-voltage* gara-gara tugas, ditenangin dulu ya. Jangan sampai nge-drop. You are doing a great job, Azri! ⚡📈");
+                    showQuote("Tegangan berhasil stabil! 📈<br><br>Jangan biarkan project kuliah bikin emosi kamu *over-voltage* ya, Sayang. Kalau mumet banget, tarik napas, atau chat aku aja! 🥰⚡");
                 }, 500);
             } else {
-                document.getElementById('volt-status').innerText = 'Tegangan Tidak Stabil, Coba Lagi!';
-                document.getElementById('volt-status').style.color = '#ef4444';
+                document.getElementById('volt-status').innerText = 'GAGAL! COBA LAGI!';
+                document.getElementById('volt-status').style.color = '#ff6b6b';
             }
         }
 
@@ -606,9 +677,9 @@
             if(isSoldering) return;
             isSoldering = true;
             solderScore = 0;
-            document.getElementById('solder-score').innerText = `Titik Solder: 0/10`;
+            document.getElementById('solder-score').innerText = `0/10`;
             document.getElementById('pcb-board').innerHTML = '';
-            document.getElementById('btn-solder').innerText = 'Solder Panas...';
+            document.getElementById('btn-solder').innerText = 'Sedang Nyolder...';
             spawnDot();
         }
 
@@ -616,10 +687,10 @@
             if(!isSoldering) return;
             let pcb = document.getElementById('pcb-board');
             let dot = document.createElement('div');
-            dot.className = 'solder-point';
+            dot.className = 'solder-point-3d';
             
-            let x = Math.floor(Math.random() * (pcb.clientWidth - 30));
-            let y = Math.floor(Math.random() * (pcb.clientHeight - 30));
+            let x = Math.floor(Math.random() * (pcb.clientWidth - 40));
+            let y = Math.floor(Math.random() * (pcb.clientHeight - 40));
             dot.style.left = x + 'px';
             dot.style.top = y + 'px';
 
@@ -627,21 +698,32 @@
                 if(!this.classList.contains('done')) {
                     this.classList.add('done');
                     solderScore++;
-                    document.getElementById('solder-score').innerText = `Titik Solder: ${solderScore}/10`;
+                    document.getElementById('solder-score').innerText = `${solderScore}/10`;
                     
                     if(solderScore >= 10) {
                         isSoldering = false;
-                        document.getElementById('btn-solder').innerText = 'Panaskan Solder';
+                        document.getElementById('btn-solder').innerText = 'PANASKAN SOLDER';
                         setTimeout(() => {
-                            showQuote("Solderanmu rapi banget! Kayak *skill* kamu yang pasti makin mantap tiap harinya. Semangat terus belajarnya ya, *I'm always cheering for you!* 🧑‍🏭💻");
+                            showQuote("Sempurna! Rapi banget hasil solderannya! 🧑‍🏭✨<br><br>Hati aku juga ikutan meleleh nih ngeliat kamu kerja keras banget hari ini. You are my favorite Engineer, Sayang! 💖💻");
                             document.getElementById('pcb-board').innerHTML = '';
-                        }, 400);
+                        }, 500);
                     } else {
-                        setTimeout(spawnDot, 200); 
+                        setTimeout(spawnDot, 150); 
                     }
                 }
             };
             pcb.appendChild(dot);
+        }
+
+        // --- GAME 6: DIARY SUNTUK ---
+        function buangSuntuk() {
+            let textArea = document.getElementById('diary-text');
+            if(textArea.value.trim() === '') {
+                alert("Isi curhatannya dulu dong Sayang, masa buang angin doang? 😂");
+                return;
+            }
+            textArea.value = '';
+            showQuote("WUSSHHH! 💨<br><br>Semua keluh kesah dan beban pikiran kamu udah di-grounding (dibuang) ke bumi! 🌍 Plong kan? Sekarang senyum dikit dong buat pacarmu ini! 😊❤️");
         }
     </script>
 </body>
